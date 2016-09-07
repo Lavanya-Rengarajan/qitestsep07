@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-ui-router.js"></script>
+    <script src="~/Scripts/angular/whatever/vehcustgel.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular/model/vehicle.js"></script>
+    <script src="~/Scripts/angular/provider/vehiclefactory.js"></script>
+    <script src="~/Scripts/angular/whatever/vehiclegel.js"></script>
+
+    <link href="~/Content/appstyle.css" rel="stylesheet" />
+    
+    
+
+ 
+    <script src="~/Scripts/angular/model/owner.js"></script>
+    <script src="~/Scripts/angular/provider/ownerfactory.js"></script>
+    <script src="~/Scripts/angular/whatever/ownergel.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    
+
+    <title>Add new owner</title>
+    
+    <script>
+        var myapp = angular.module("vehcustapp", []);
+        myapp.controller("vehcustcontroller1", vehiclegel);
+        myapp.controller("vehcustcontroller2", ownergel);
+      
+    </script>
+    <script>
+    myapp.config(function ($provide) {
+        $provide.factory("pfactory", ownerfactory);
+    })
+
+    </script>
+    <script src="~/Scripts/angular/provider/vehicleprovider.js"></script>
+    <title>Vehicle Customer Application</title>
+</head>
+<body>
+    <div ng-app="vehcustapp"> 
+        
+        <div ng-controller="vehcustcontroller1">
+            <br/><br/>
+            <i class="cls1">Add New Vehicle</i><br/>
+            <i>Vehicle Name</i>
+            <input type="text" name="vehno" id="txtvehno" ng-model="vehobj.vehno" /><br />
+            <i>Vehicle Description</i>
+            <input type="text" name="vehdesc" id="txtvehdesc" ng-model="vehobj.vehdesc" /><br />
+         
+            <input type="button" name="btnadd" value="Add vehicle" ng-click="add()" />
+           
+
+            <br /><br />
+            <div ng-controller="vehcustcontroller2">
+                <i class="cls1">Add New owner</i><br/>
+                <i>Owner Name</i>
+                <input type="text" name="name" id="txtname" ng-model="ownerobj.name" /><br />
+                <i>Phone no</i>
+                <input type="text" name="phoneno" id="txtphone" ng-model="ownerobj.phoneno" /><br />
+                <input type="button" name="btnadd" value="Add owner" ng-click="add()" /><br/>
+
+
+               
+                <br /><br />
+               
+                <i class="cls1">Search module</i><br/>
+                Select the search option from the dropdown
+                <select ng-model="selopt">
+                    <option ng-repeat="own in ownerobjs" value="{{own.name}}">{{own.name}}</option>
+                    <option ng-repeat="veh in vehobjs" value="{{veh.vehno}}">{{veh.vehno}}</option>
+                
+                </select>
+                <br/>
+                Enter the free text for search
+                <input type="text" name="name" ng-model="freetxt"/>
+                <br/><br/>
+                
+                <i class="cls1">Owner Details</i>
+                <table border="1"  ng-if="ownerobjs!=undefined">
+                    <tr>
+                        <th>Owner Name</th>
+                        <th>Contact number</th>
+
+                    </tr>
+                    <tr ng-repeat="own in ownerobjs|filter:selopt|filter:freetxt">
+                        <td>{{own.name}}</td>
+                        <td>{{own.phoneno}}</td>
+
+                    </tr>
+
+                </table>
+                <br /><br />
+                <i class="cls1">Vehicle Details</i>
+                <table border="1" ng-if="vehobjs!=undefined">
+                    
+                    <tr>
+                        <th>Vehicle number</th>
+                        <th>Vehicle description</th>
+                        <th>Vheicle Image</th>
+                    </tr>
+                    <tr ng-repeat="veh in vehobjs|filter:selopt|filter:freetxt">
+                        <td>{{veh.vehno}}</td>
+                        <td>{{veh.vehdesc}}</td>
+                        <td>{{veh.vehimg}}</td>
+                    </tr>
+
+                </table>
+               
+</div>
+        </div>
+            </div>
+    
+</body>
+</html>
